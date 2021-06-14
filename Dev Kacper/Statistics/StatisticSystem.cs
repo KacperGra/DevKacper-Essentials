@@ -7,7 +7,7 @@ namespace DevKacper.Mechanic
 {
     public class StatisticSystem
     {
-        public EventHandler OnValueChanged;
+        [System.NonSerialized] public EventHandler OnValueChanged;
 
         public enum StatisticsState
         {
