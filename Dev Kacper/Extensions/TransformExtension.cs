@@ -10,7 +10,7 @@ namespace DevKacper.Extensions
         {
             foreach(Transform child in transform)
             {
-                Object.Destroy(child);
+                Object.Destroy(child.gameObject);
             }
         }
 
@@ -20,7 +20,7 @@ namespace DevKacper.Extensions
             {
                 if(child.name == name)
                 {
-                    Object.Destroy(child);
+                    Object.Destroy(child.gameObject);
                     return;
                 }
             }
@@ -43,6 +43,26 @@ namespace DevKacper.Extensions
         {
             var child = Object.Instantiate(prefab, transform);
             return child;
+        }
+
+        public static void SetLeft(this RectTransform rectTransform, float leftValue)
+        {
+            rectTransform.offsetMin = new Vector2(leftValue, rectTransform.offsetMin.y);
+        }
+
+        public static void SetRight(this RectTransform rectTransform, float rightValue)
+        {
+            rectTransform.offsetMax = new Vector2(-rightValue, rectTransform.offsetMax.y);
+        }
+
+        public static void SetTop(this RectTransform rectTransform, float topValue)
+        {
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -topValue);
+        }
+
+        public static void SetBottom(this RectTransform rectTransform, float bottomValue)
+        {
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, bottomValue);
         }
     }
 }

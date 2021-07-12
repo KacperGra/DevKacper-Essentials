@@ -60,6 +60,18 @@ namespace DevKacper.Utility
             return (T)Enum.Parse(typeof(T), text);
         }
 
+        public static T GetStringToEnum<T>(string text) where T : Enum
+        {
+            foreach(T type in Enum.GetValues(typeof(T)))
+            {
+                if(type.Equals(StringToEnum<T>(text)))
+                {
+                    return type;
+                }
+            }
+            return (T)Enum.Parse(typeof(T), text);
+        }
+
         public static int RandomRange(int minimum, int maximum)
         {
             UnityEngine.Random.InitState(UnityEngine.Random.Range(0, 256666));
@@ -85,6 +97,11 @@ namespace DevKacper.Utility
 
             return array;
         }
+
+        public static string GetStringWithColor(string text, string hexColorValue)
+        {
+            return string.Format("{0}{1}{2}{3}{4}", "<color=", hexColorValue, ">", text, "</color>");
+        }
     }
 
     public static class JsonHelper
@@ -107,6 +124,13 @@ namespace DevKacper.Utility
             Wrapper<T> wrapper = new Wrapper<T>();
             wrapper.Items = array;
             return JsonUtility.ToJson(wrapper, prettyPrint);
+        }
+
+        public static T[] LoadJsonData<T>(string resourcesPath)
+        {
+            TextAsset textAsset = Resources.Load<TextAsset>(resourcesPath);
+            string json = textAsset.text;
+            return FromJson<T>(json);
         }
 
         [Serializable]
