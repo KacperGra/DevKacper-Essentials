@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -109,6 +110,12 @@ namespace DevKacper.Utility
         public static T[] FromJson<T>(string json)
         {
             Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+            return wrapper.Items;
+        }
+
+        public static T[] NewFromJson<T>(string json)
+        {
+            Wrapper<T> wrapper = JsonConvert.DeserializeObject<Wrapper<T>>(json);
             return wrapper.Items;
         }
 
