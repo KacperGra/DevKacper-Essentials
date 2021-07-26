@@ -16,14 +16,13 @@ namespace DevKacper.Mechanic
             Base
         }
 
-        private StatisticsState state;
+        private StatisticsState State => GetState();
         private float value;
         private float maxValue;
 
         public StatisticSystem(float value)
         {
             OnValueChanged = null;
-            state = StatisticsState.Full;
             maxValue = value;
             this.value = maxValue;
         }
@@ -33,12 +32,10 @@ namespace DevKacper.Mechanic
             if (amount > 0)
             {
                 value -= amount;
-                state = StatisticsState.Base;
 
                 if (value <= 0)
                 {
                     value = 0;
-                    state = StatisticsState.Empty;
                 }
                 OnValueChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -49,11 +46,9 @@ namespace DevKacper.Mechanic
             if (amount > 0)
             {
                 value += amount;
-                state = StatisticsState.Base;
                 if (value > maxValue)
                 {
                     value = maxValue;
-                    state = StatisticsState.Full;
                 }
 
                 OnValueChanged?.Invoke(this, EventArgs.Empty);
@@ -96,7 +91,15 @@ namespace DevKacper.Mechanic
 
         public StatisticsState GetState()
         {
-            return state;
+            if(value >= maxValue)
+            {
+                return StatisticsState.Full;
+            }
+            else if(value <= 0f)
+            {
+                return StatisticsState.Empty;
+            }
+            return StatisticsState.Base;
         }
 
         public override string ToString()
