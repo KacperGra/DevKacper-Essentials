@@ -60,6 +60,7 @@ namespace DevKacper.ObjectPooler
         public static GameObject Spawn(string tag)
         {
             var spawnedObject = poolQueue[tag].Dequeue();
+            spawnedObject.SetActive(true);
             poolQueue[tag].Enqueue(spawnedObject);
             return spawnedObject;
         }

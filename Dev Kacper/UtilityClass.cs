@@ -112,6 +112,17 @@ namespace DevKacper.Utility
                 UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
             );
         }
+
+        public static bool IsPointInBounds(Vector2 point, Bounds bounds)
+        {
+            bool pointX = (point.x > bounds.min.x) && (point.x < bounds.max.x);
+            bool pointY = (point.y > bounds.min.y) && (point.y < bounds.max.y);
+            if (pointX && pointY)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     public static class JsonHelper
