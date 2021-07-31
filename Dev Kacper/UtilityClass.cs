@@ -103,6 +103,15 @@ namespace DevKacper.Utility
         {
             return string.Format("{0}{1}{2}{3}{4}", "<color=", hexColorValue, ">", text, "</color>");
         }
+
+        public static Vector3 RandomPointInBounds(Bounds bounds)
+        {
+            return new Vector3(
+                UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+                UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+                UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+            );
+        }
     }
 
     public static class JsonHelper
