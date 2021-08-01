@@ -6,19 +6,6 @@ namespace DevKacper.ObjectPooler
 {
     public class TagObjectPooler : MonoBehaviour
     {
-        [System.Serializable]
-        public class Pool
-        {
-            [Header("General")]
-            [SerializeField] private string tag;
-            [SerializeField] private GameObject prefab;
-            [SerializeField] private int size;
-
-            public string Tag => tag;
-            public GameObject Prefab => prefab;
-            public int Size => size;
-        }
-
         public List<Pool> poolList;
         public static Dictionary<string, Queue<GameObject>> poolQueue;
 
@@ -44,11 +31,11 @@ namespace DevKacper.ObjectPooler
             foreach(Pool pool in poolList)
             {
                 var newQueue = new Queue<GameObject>();
-                var poolParent = new GameObject($"{pool.Tag}Content");
+                pool.parent = new GameObject($"{pool.Tag}Content").transform;
 
                 for(int i = 0; i < pool.Size; ++i)
                 {
-                    var newPrefabObject = Instantiate(pool.Prefab, poolParent.transform);
+                    var newPrefabObject = Instantiate(pool.Prefab, pool.parent);
                     newPrefabObject.SetActive(false);
                     newQueue.Enqueue(newPrefabObject);
                 }
@@ -57,11 +44,30 @@ namespace DevKacper.ObjectPooler
             }
         }
 
+        private GameObject CreateObject(string tag)
+        {
+            GameObject newObject = null;
+            foreach(Pool pool in poolList)
+            {
+                if(pool.Tag == tag)
+                {
+                    newObject = Instantiate(pool.Prefab, pool.parent);
+                    break;
+                }
+            }
+            return newObject;
+        }
+
         public static GameObject Spawn(string tag)
         {
+            if (poolQueue[tag].Count == 0)
+            {
+                Debug.Log("Pool extended! Creating new object!");
+                return Instance.CreateObject(tag);
+            }
+
             var spawnedObject = poolQueue[tag].Dequeue();
             spawnedObject.SetActive(true);
-            poolQueue[tag].Enqueue(spawnedObject);
             return spawnedObject;
         }
 
@@ -84,6 +90,12 @@ namespace DevKacper.ObjectPooler
             var spawnedObject = Spawn(tag, position, rotation);
             spawnedObject.transform.localScale = scale;
             return spawnedObject;
+        }
+
+        public static void DestroyObject(string tag, GameObject objectToDestroy)
+        {
+            objectToDestroy.SetActive(false);
+            poolQueue[tag].Enqueue(objectToDestroy);
         }
     }
 }
