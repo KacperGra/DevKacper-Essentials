@@ -2,17 +2,20 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 namespace DevKacper.Utility
 {
     public static class UtilityClass
     {
+        public const int sortingOrderDefault = 5000;
+
         public static float GetAngleFromVectorFloat(Vector3 direction)
         {
             direction = direction.normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            if(angle < 0)
+            if (angle < 0)
             {
                 angle += 360f;
             }
@@ -45,7 +48,7 @@ namespace DevKacper.Utility
         {
             return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
         }
-        
+
         public static Vector3 GetAbsoluteVector3(Vector3 vector)
         {
             return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
@@ -63,9 +66,9 @@ namespace DevKacper.Utility
 
         public static T GetStringToEnum<T>(string text) where T : Enum
         {
-            foreach(T type in Enum.GetValues(typeof(T)))
+            foreach (T type in Enum.GetValues(typeof(T)))
             {
-                if(type.Equals(StringToEnum<T>(text)))
+                if (type.Equals(StringToEnum<T>(text)))
                 {
                     return type;
                 }
@@ -122,6 +125,30 @@ namespace DevKacper.Utility
                 return true;
             }
             return false;
+        }
+
+        // Create Text in the World
+        public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault)
+        {
+            if (color == null) color = Color.white;
+            return CreateWorldText(parent, text, localPosition, fontSize, (Color)color, textAnchor, textAlignment, sortingOrder);
+        }
+
+        // Create Text in the World
+        public static TextMesh CreateWorldText(Transform parent, string text, Vector3 localPosition, int fontSize, Color color, TextAnchor textAnchor, TextAlignment textAlignment, int sortingOrder)
+        {
+            GameObject gameObject = new GameObject("World_Text", typeof(TextMesh));
+            Transform transform = gameObject.transform;
+            transform.SetParent(parent, false);
+            transform.localPosition = localPosition;
+            TextMesh textMesh = gameObject.GetComponent<TextMesh>();
+            textMesh.anchor = textAnchor;
+            textMesh.alignment = textAlignment;
+            textMesh.text = text;
+            textMesh.fontSize = fontSize;
+            textMesh.color = color;
+            textMesh.GetComponent<MeshRenderer>().sortingOrder = sortingOrder;
+            return textMesh;
         }
     }
 
