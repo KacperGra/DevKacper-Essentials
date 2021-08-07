@@ -33,6 +33,13 @@ namespace DevKacper.Utility
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             return new Vector2(worldPoint.x, worldPoint.y);
         }
+        public static Vector2 GetGridMousePosition()
+        {
+            Vector2 mousePosition = GetMousePosition();
+            mousePosition = new Vector2(Mathf.FloorToInt(mousePosition.x), Mathf.FloorToInt(mousePosition.y));
+            return mousePosition;
+        }
+
 
         public static Vector2 GetMousePositionInRadius(Vector2 transformPosition, float radius)
         {
