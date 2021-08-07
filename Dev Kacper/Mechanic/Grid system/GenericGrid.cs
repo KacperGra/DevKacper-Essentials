@@ -20,7 +20,7 @@ namespace DevKacper.Mechanic
         private readonly float cellSize;
         private Vector3 originPosition;
 
-        private T[,] gridArray;
+        private readonly T[,] gridArray;
         private readonly TextMesh[,] debugTextArray;
 
         public GenericGrid(int width, int height, float cellSize, Vector3 originPosition, Func<GenericGrid<T>, int, int, T> createGridObject)
@@ -40,7 +40,7 @@ namespace DevKacper.Mechanic
                 }
             }
 
-            bool drawGrid = true;
+            bool drawGrid = false;
             if (drawGrid)
             {
                 debugTextArray = new TextMesh[width, height];
@@ -61,6 +61,26 @@ namespace DevKacper.Mechanic
             }
         }
 
+        public int GetWidth()
+        {
+            return width;
+        }
+
+        public int GetHeight()
+        {
+            return height;
+        }
+
+        public float GetCellSize()
+        {
+            return cellSize;
+        }
+
+        public Vector3 GetOrigin()
+        {
+            return originPosition;
+        }
+
         private void GenericGrid_OnGridObjectChanged(object sender, OnGridObjectChangedEventArgs e)
         {
             debugTextArray[e.x, e.y].text = gridArray[e.x, e.y]?.ToString();
@@ -71,7 +91,7 @@ namespace DevKacper.Mechanic
             return new Vector3(x, y) * cellSize + originPosition;
         }
 
-        private void GetXY(Vector3 worldPosition, out int x, out int y)
+        public void GetXY(Vector3 worldPosition, out int x, out int y)
         {
             x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
             y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
@@ -83,19 +103,18 @@ namespace DevKacper.Mechanic
             {
                 gridArray[x, y] = value;
                 debugTextArray[x, y].text = value.ToString();
-                if(OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
+                OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y });
             }
         }
 
         public void TriggerGridObjectChanged(int x, int y)
         {
-            if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
+            OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y });
         }
 
         public void SetObject(Vector3 worldPosition, T value)
         {
-            int x, y;
-            GetXY(worldPosition, out x, out y);
+            GetXY(worldPosition, out int x, out int y);
             SetObject(x, y, value);
         }
 
@@ -105,13 +124,12 @@ namespace DevKacper.Mechanic
             {
                 return gridArray[x, y];
             }
-            return default(T);
+            return default;
         }
 
         public T GetValue(Vector3 worldPosition)
         {
-            int x, y;
-            GetXY(worldPosition, out x, out y);
+            GetXY(worldPosition, out int x, out int y);
             return GetValue(x, y);
         }
     }

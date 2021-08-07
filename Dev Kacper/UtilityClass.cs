@@ -23,6 +23,14 @@ namespace DevKacper.Utility
             return angle;
         }
 
+        public static Vector3 WorldPositionToGrid(Vector3 worldPosition, float cellSize = 1f)
+        {
+            int x = Mathf.FloorToInt(worldPosition.x * cellSize);
+            int y = Mathf.FloorToInt(worldPosition.y * cellSize);
+            int z = Mathf.FloorToInt(worldPosition.z * cellSize);
+            return new Vector3(x, y, z);
+        }
+
         public static Vector2 GetRandomDirection()
         {
             return UnityEngine.Random.insideUnitCircle.normalized;
