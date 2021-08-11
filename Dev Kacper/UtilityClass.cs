@@ -45,7 +45,7 @@ namespace DevKacper.Utility
         {
             Vector2 mousePosition = GetMousePosition();
             mousePosition = new Vector2(Mathf.FloorToInt(mousePosition.x), Mathf.FloorToInt(mousePosition.y));
-            return mousePosition;
+            return mousePosition + Vector2.one * 0.5f;
         }
 
 

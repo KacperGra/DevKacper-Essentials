@@ -6,7 +6,9 @@ namespace DevKacper.Mechanic
 {
     public class Slot
     {
+        public int id;
         public Item item;
+        public int amount;
     }
 }
 

@@ -6,8 +6,10 @@ namespace DevKacper.Mechanic
 {
     public abstract class Item
     {
-        protected string name;
+        protected int id;
+        public int ID => id;
 
+        protected string name;
         public string Name => name;
     }
 }
