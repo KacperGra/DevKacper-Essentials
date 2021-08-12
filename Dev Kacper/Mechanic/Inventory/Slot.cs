@@ -9,6 +9,12 @@ namespace DevKacper.Mechanic
         public int id;
         public Item item;
         public int amount;
+
+        public void Clear()
+        {
+            item = null;
+            amount = 0;
+        }
     }
 }
 

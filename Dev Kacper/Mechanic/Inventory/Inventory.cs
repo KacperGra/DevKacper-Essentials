@@ -38,11 +38,12 @@ namespace DevKacper.Mechanic
             return null;
         }
 
-        public void SetItem(Item item, int id)
+        public Slot GetSlot(int id)
         {
-            slots[id].item = item;
-            OnInventoryUpdated?.Invoke();
+            return slots[id];
         }
+
+        public abstract void SetItem(Item item, int id);
 
         public abstract void RemoveItem(Item item);
 

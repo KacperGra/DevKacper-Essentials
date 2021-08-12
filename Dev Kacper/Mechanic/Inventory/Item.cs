@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace DevKacper.Mechanic
 {
-    public abstract class Item
+    public abstract class Item : ScriptableObject
     {
-        protected int id;
+        [HideInInspector]
+        [SerializeField] protected int id;
         public int ID => id;
 
-        protected string name;
-        public string Name => name;
+        protected string itemName;
+        public string Name => itemName;
     }
 }
