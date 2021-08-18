@@ -165,6 +165,23 @@ namespace DevKacper.Utility
             textMesh.GetComponent<MeshRenderer>().sortingOrder = sortingOrder;
             return textMesh;
         }
+
+        public static Vector2 GetVector2Center(Vector2 first, Vector2 second)
+        {
+            return (first + second) / 2f;
+        }
+
+        public static Vector2 GetVector2Center(Transform[] array)
+        {
+            float totalX = 0;
+            float totalY = 0;
+            foreach(Transform transform in array)
+            {
+                totalX += transform.position.x;
+                totalY += transform.position.y;
+            }
+            return new Vector2(totalX, totalY) / (array.Length + 1);
+        }
     }
 
     public static class JsonHelper

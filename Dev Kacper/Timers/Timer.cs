@@ -8,15 +8,33 @@ namespace DevKacper.Timers
     public class Timer
     {
         private float time;
-        public Action OnTimerEnd;
+        private Action[] OnTimerEnd;
 
-        public void SetupTimer(float time, Action OnTimerTimeOut)
+        public Timer() { }
+
+        public Timer(float time, Action onTimerEnd)
         {
-            this.time = time;
-            this.OnTimerEnd = OnTimerTimeOut;
+            SetupTimer(time, onTimerEnd);
         }
 
-        private void Update(float deltaTime)
+        public Timer(float time, Action[] onTimerEnd)
+        {
+            SetupTimer(time, onTimerEnd);
+        }
+
+        public void SetupTimer(float time, Action onTimerEnd = null)
+        {
+            this.time = time;
+            this.OnTimerEnd = new Action[1];
+            this.OnTimerEnd[0] = onTimerEnd;
+        }
+        public void SetupTimer(float time, Action[] onTimerEnd = null)
+        {
+            this.time = time;
+            this.OnTimerEnd = onTimerEnd;
+        }
+
+        public void Update(float deltaTime)
         {
             if (time > 0)
             {
@@ -30,7 +48,15 @@ namespace DevKacper.Timers
 
         private void TimerInvoke()
         {
-            OnTimerEnd?.Invoke();
+            if(OnTimerEnd == null)
+            {
+                return;
+            }
+
+            foreach(Action action in OnTimerEnd)
+            {
+                action?.Invoke();
+            }
         }
 
         public float GetTime()

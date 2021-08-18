@@ -9,14 +9,6 @@ namespace DevKacper.Mechanic
     {
         [System.NonSerialized] public EventHandler OnValueChanged;
 
-        public enum StatisticsState
-        {
-            Full,
-            Empty,
-            Base
-        }
-
-        private StatisticsState State => GetState();
         private float value;
         private float maxValue;
 
@@ -89,17 +81,9 @@ namespace DevKacper.Mechanic
             return maxValue;
         }
 
-        public StatisticsState GetState()
+        public bool IsEmpty()
         {
-            if(value >= maxValue)
-            {
-                return StatisticsState.Full;
-            }
-            else if(value <= 0f)
-            {
-                return StatisticsState.Empty;
-            }
-            return StatisticsState.Base;
+            return value <= 0;
         }
 
         public override string ToString()
