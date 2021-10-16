@@ -1,8 +1,6 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
 using UnityEngine;
 
 namespace DevKacper.Utility
@@ -10,6 +8,7 @@ namespace DevKacper.Utility
     public static class UtilityClass
     {
         public const int sortingOrderDefault = 5000;
+        public static Camera _mainCamera = null;
 
         public static float GetAngleFromVectorFloat(Vector3 direction)
         {
@@ -38,16 +37,20 @@ namespace DevKacper.Utility
 
         public static Vector2 GetMousePosition()
         {
-            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            return new Vector2(worldPoint.x, worldPoint.y);
+            if (_mainCamera == null)
+            {
+                _mainCamera = Camera.main;
+            }
+
+            return _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         }
+
         public static Vector2 GetGridMousePosition()
         {
             Vector2 mousePosition = GetMousePosition();
             mousePosition = new Vector2(Mathf.FloorToInt(mousePosition.x), Mathf.FloorToInt(mousePosition.y));
             return mousePosition + Vector2.one * 0.5f;
         }
-
 
         public static Vector2 GetMousePositionInRadius(Vector2 transformPosition, float radius)
         {
@@ -175,7 +178,7 @@ namespace DevKacper.Utility
         {
             float totalX = 0;
             float totalY = 0;
-            foreach(Transform transform in array)
+            foreach (Transform transform in array)
             {
                 totalX += transform.position.x;
                 totalY += transform.position.y;
@@ -189,12 +192,6 @@ namespace DevKacper.Utility
         public static T[] FromJson<T>(string json)
         {
             Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
-            return wrapper.Items;
-        }
-
-        public static T[] NewFromJson<T>(string json)
-        {
-            Wrapper<T> wrapper = JsonConvert.DeserializeObject<Wrapper<T>>(json);
             return wrapper.Items;
         }
 
@@ -225,7 +222,7 @@ namespace DevKacper.Utility
             public T[] Items;
         }
     }
-    
+
     public static class BetterColors
     {
         public static Color blue = new Color32(46, 75, 242, 255);
