@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace DevKacper.Extensions
 {
-    public static class TransformExtension 
+    public static class TransformExtension
     {
         public static void DestroyChildren(this Transform transform)
         {
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
                 Object.Destroy(child.gameObject);
             }
@@ -16,9 +16,9 @@ namespace DevKacper.Extensions
 
         public static void DestroyChild(this Transform transform, string name)
         {
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
-                if(child.name == name)
+                if (child.name == name)
                 {
                     Object.Destroy(child.gameObject);
                     return;
@@ -66,4 +66,3 @@ namespace DevKacper.Extensions
         }
     }
 }
-
