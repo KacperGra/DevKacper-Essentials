@@ -5,25 +5,25 @@ namespace DevKacper.Timers
 {
     public class TimerBehaviour : MonoBehaviour
     {
-        private float time;
-        public Action OnTimerEnd;
+        public event Action OnTimerEnd;
+
+        private float _time;
 
         public void SetupTimer(float time, Action OnTimerTimeOut)
         {
-            this.time = time;
-            this.OnTimerEnd = OnTimerTimeOut;
+            _time = time;
+            OnTimerEnd = OnTimerTimeOut;
         }
 
         private void Update()
         {
-            if (time > 0)
+            if (_time > 0)
             {
-                time -= Time.deltaTime;
+                _time -= Time.deltaTime;
+                return;
             }
-            else
-            {
-                DestroyTimer();
-            }
+
+            DestroyTimer();
         }
 
         private void DestroyTimer()
@@ -34,8 +34,7 @@ namespace DevKacper.Timers
 
         public float GetTime()
         {
-            return time;
+            return _time;
         }
     }
 }
-

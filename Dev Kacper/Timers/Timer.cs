@@ -7,61 +7,37 @@ namespace DevKacper.Timers
 {
     public class Timer
     {
-        private float time;
-        private Action[] OnTimerEnd;
+        private Action _onTimerEnd;
+        private float _time;
 
-        public Timer() { }
+        public Timer()
+        { }
 
         public Timer(float time, Action onTimerEnd)
         {
             SetupTimer(time, onTimerEnd);
         }
 
-        public Timer(float time, Action[] onTimerEnd)
+        public void SetupTimer(float time, Action onTimerEndAction = null)
         {
-            SetupTimer(time, onTimerEnd);
-        }
-
-        public void SetupTimer(float time, Action onTimerEnd = null)
-        {
-            this.time = time;
-            this.OnTimerEnd = new Action[1];
-            this.OnTimerEnd[0] = onTimerEnd;
-        }
-        public void SetupTimer(float time, Action[] onTimerEnd = null)
-        {
-            this.time = time;
-            this.OnTimerEnd = onTimerEnd;
+            _time = time;
+            _onTimerEnd = onTimerEndAction;
         }
 
         public void Update(float deltaTime)
         {
-            if (time > 0)
+            if (_time > 0)
             {
-                time -= deltaTime;
-            }
-            else
-            {
-                TimerInvoke();
-            }
-        }
-
-        private void TimerInvoke()
-        {
-            if(OnTimerEnd == null)
-            {
+                _time -= deltaTime;
                 return;
             }
 
-            foreach(Action action in OnTimerEnd)
-            {
-                action?.Invoke();
-            }
+            _onTimerEnd?.Invoke();
         }
 
         public float GetTime()
         {
-            return time;
+            return _time;
         }
     }
 }

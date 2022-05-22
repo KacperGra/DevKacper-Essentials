@@ -1,22 +1,18 @@
+using System;
+
 namespace DevKacper.Mechanic
 {
     public class HealthSystem
     {
-        public enum State
-        {
-            Alive,
-            Dead
-        }
+        public event Action OnDeath;
 
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
-        private State state;
 
         public HealthSystem(int healthValue)
         {
             MaxHealth = healthValue;
             Health = healthValue;
-            state = State.Alive;
         }
 
         public void TakeDamage(int value)
@@ -24,7 +20,7 @@ namespace DevKacper.Mechanic
             Health -= value;
             if (Health <= 0)
             {
-                state = State.Dead;
+                OnDeath?.Invoke();
             }
         }
 
@@ -35,20 +31,6 @@ namespace DevKacper.Mechanic
             {
                 Health = MaxHealth;
             }
-            if (Health > 0)
-            {
-                state = State.Alive;
-            }
-        }
-
-        public bool IsAlive()
-        {
-            return state == State.Alive;
-        }
-
-        public float GetHealthRatio()
-        {
-            return (float)Health / MaxHealth;
         }
 
         public void ChangeMaxHealth(int health, bool SetHealthEqualToMax = false)
@@ -58,6 +40,16 @@ namespace DevKacper.Mechanic
             {
                 Health = MaxHealth;
             }
+        }
+
+        public bool IsAlive()
+        {
+            return Health > 0;
+        }
+
+        public float GetHealthRatio()
+        {
+            return (float)Health / MaxHealth;
         }
 
         public override string ToString()

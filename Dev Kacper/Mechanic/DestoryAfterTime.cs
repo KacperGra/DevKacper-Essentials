@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DevKacper.Mechanic
 {
-    public class DestoryOnTime : MonoBehaviour
+    public class DestoryAfterTime : MonoBehaviour
     {
         [SerializeField] public float time;
 
@@ -14,4 +14,3 @@ namespace DevKacper.Mechanic
         }
     }
 }
-

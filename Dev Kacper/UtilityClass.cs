@@ -10,7 +10,7 @@ namespace DevKacper.Utility
         public const int sortingOrderDefault = 5000;
         public static Camera _mainCamera = null;
 
-        public static float GetAngleFromVectorFloat(Vector3 direction)
+        public static float GetAngleFromVector(Vector3 direction)
         {
             direction = direction.normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -30,9 +30,9 @@ namespace DevKacper.Utility
             return new Vector3(x, y, z);
         }
 
-        public static Vector2 GetRandomDirection()
+        public static Vector2 GetRandomDirection(float range = 1f)
         {
-            return UnityEngine.Random.insideUnitCircle.normalized;
+            return UnityEngine.Random.insideUnitCircle.normalized * range;
         }
 
         public static Vector2 GetMousePosition()
@@ -52,11 +52,11 @@ namespace DevKacper.Utility
             return mousePosition + Vector2.one * 0.5f;
         }
 
-        public static Vector2 GetMousePositionInRadius(Vector2 transformPosition, float radius)
+        public static Vector2 GetMousePositionInRadius(Vector2 position, float radius)
         {
             var mousePosition = GetMousePosition();
 
-            var direction = mousePosition - transformPosition;
+            var direction = mousePosition - position;
             direction = Vector2.ClampMagnitude(direction, radius);
 
             return direction;
@@ -72,7 +72,7 @@ namespace DevKacper.Utility
             return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
         }
 
-        public static string GetStringFromFile(string path)
+        public static string GetTextFromFile(string path)
         {
             return File.ReadAllText(Application.dataPath + path);
         }
@@ -136,9 +136,9 @@ namespace DevKacper.Utility
 
         public static bool IsPointInBounds(Vector2 point, Bounds bounds)
         {
-            bool pointX = (point.x > bounds.min.x) && (point.x < bounds.max.x);
-            bool pointY = (point.y > bounds.min.y) && (point.y < bounds.max.y);
-            if (pointX && pointY)
+            bool pointXInBounds = (point.x > bounds.min.x) && (point.x < bounds.max.x);
+            bool pointYInBounds = (point.y > bounds.min.y) && (point.y < bounds.max.y);
+            if (pointXInBounds && pointYInBounds)
             {
                 return true;
             }
@@ -223,18 +223,10 @@ namespace DevKacper.Utility
         }
     }
 
-    public static class BetterColors
+    public static class Colors
     {
-        public static Color blue = new Color32(46, 75, 242, 255);
-        public static Color orange = new Color32(218, 126, 36, 255);
-        public static Color red = new Color32(209, 43, 40, 255);
-    }
-}
-
-namespace DevKacper.Interface
-{
-    public interface IDamageable
-    {
-        void TakeDamage(int value);
+        public static Color Blue = new Color32(46, 75, 242, 255);
+        public static Color Orange = new Color32(218, 126, 36, 255);
+        public static Color Red = new Color32(209, 43, 40, 255);
     }
 }
