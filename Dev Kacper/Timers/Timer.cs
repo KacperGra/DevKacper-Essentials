@@ -7,32 +7,48 @@ namespace DevKacper.Timers
 {
     public class Timer
     {
-        private Action _onTimerEnd;
+        private Action _onFinished;
         private float _time;
+        private float _startingTime;
 
-        public Timer()
-        { }
+        private bool _resetOnFinish;
+        private bool _isFinished;
 
-        public Timer(float time, Action onTimerEnd)
+        public bool ResetOnFinish
         {
-            SetupTimer(time, onTimerEnd);
+            get => _resetOnFinish;
+            set => _resetOnFinish = value;
         }
 
-        public void SetupTimer(float time, Action onTimerEndAction = null)
+        public Timer(float time, Action onFinished)
         {
+            _startingTime = time;
             _time = time;
-            _onTimerEnd = onTimerEndAction;
+            _onFinished = onFinished;
+            _isFinished = false;
+            _resetOnFinish = false;
         }
 
-        public void Update(float deltaTime)
+        public void Update(float time)
         {
-            if (_time > 0)
+            if (_isFinished)
             {
-                _time -= deltaTime;
                 return;
             }
 
-            _onTimerEnd?.Invoke();
+            if (_time > 0)
+            {
+                _time -= time;
+                return;
+            }
+
+            _onFinished?.Invoke();
+            _isFinished = true;
+            if (_resetOnFinish)
+            {
+                _isFinished = false;
+                _time = _startingTime;
+            }
         }
 
         public float GetTime()

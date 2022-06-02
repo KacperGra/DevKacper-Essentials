@@ -7,14 +7,14 @@ namespace DevKacper.Mechanic
 {
     public class ValueWrapper<TValue>
     {
-        public event Action<TValue> OnValueChanged = null;
+        private Action<TValue> _onValueChanged = null;
 
         private TValue _lastValue;
         private TValue _value;
 
         public ValueWrapper()
         {
-            _value = default;
+            _value = default(TValue);
         }
 
         public ValueWrapper(TValue value)
@@ -27,7 +27,17 @@ namespace DevKacper.Mechanic
             _lastValue = value;
             _value = value;
 
-            OnValueChanged?.Invoke(_value);
+            _onValueChanged?.Invoke(_value);
+        }
+
+        public void AddChangeListener(Action<TValue> callback)
+        {
+            _onValueChanged += callback;
+        }
+
+        public void RemoveChangeListener(Action<TValue> callback)
+        {
+            _onValueChanged += callback;
         }
 
         public TValue GetLastValue()
@@ -38,6 +48,11 @@ namespace DevKacper.Mechanic
         public TValue GetValue()
         {
             return _value;
+        }
+
+        public bool Is(TValue value)
+        {
+            return _value != null && _value.Equals(value);
         }
     }
 }

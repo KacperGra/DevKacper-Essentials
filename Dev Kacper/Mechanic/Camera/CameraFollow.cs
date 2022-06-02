@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private Transform _target;
+    [SerializeField] private float _moveSpeed;
 
-    private float cameraZValue = 10f;
+    private float cameraPositionZ;
 
     private void Awake()
     {
-        cameraZValue = transform.position.z;
+        cameraPositionZ = transform.position.z;
     }
 
     private void FixedUpdate()
     {
-        if(target != null)
+        if (_target != null)
         {
-            float moveValue = Time.fixedDeltaTime * moveSpeed;
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveValue);
-            transform.position = new Vector3(transform.position.x, transform.position.y, cameraZValue);
+            float moveValue = Time.fixedDeltaTime * _moveSpeed;
+            transform.position = Vector3.MoveTowards(transform.position, _target.position, moveValue);
+            transform.position = new Vector3(transform.position.x, transform.position.y, cameraPositionZ);
         }
     }
 
     public void SetTarget(Transform target)
     {
-        this.target = target;
+        this._target = target;
     }
 
     public void SetMoveSpeed(float moveSpeed)
     {
-        this.moveSpeed = moveSpeed;
+        this._moveSpeed = moveSpeed;
     }
 }

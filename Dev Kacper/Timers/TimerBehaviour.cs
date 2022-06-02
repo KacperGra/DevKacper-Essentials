@@ -3,38 +3,35 @@ using UnityEngine;
 
 namespace DevKacper.Timers
 {
-    public class TimerBehaviour : MonoBehaviour
+    public class TimerBehaviour : Timer
     {
-        public event Action OnTimerEnd;
+        #region Static
 
-        private float _time;
-
-        public void SetupTimer(float time, Action OnTimerTimeOut)
+        public static TimerBehaviour Create(float time, Action onFinished, string name = "")
         {
-            _time = time;
-            OnTimerEnd = OnTimerTimeOut;
-        }
-
-        private void Update()
-        {
-            if (_time > 0)
+            TimerBehaviour timer = new TimerBehaviour(time, onFinished)
             {
-                _time -= Time.deltaTime;
-                return;
-            }
+                _name = name
+            };
 
-            DestroyTimer();
+            TimerManager.Instance.AddTimer(timer);
+
+            return timer;
         }
 
-        private void DestroyTimer()
+        public static void DestroyTimer(TimerBehaviour timer)
         {
-            OnTimerEnd?.Invoke();
-            Destroy(this);
+            TimerManager.Instance.RemoveTimer(timer);
         }
 
-        public float GetTime()
+        #endregion Static
+
+        public string Name => _name;
+
+        private string _name;
+
+        public TimerBehaviour(float time, Action onFinished) : base(time, onFinished)
         {
-            return _time;
         }
     }
 }
