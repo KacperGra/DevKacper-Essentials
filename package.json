@@ -1,7 +1,7 @@
 {
 
     "name": "com.devkacper.unityessentials",
-    "displayName": "DevKacper-Essentials",
+    "displayName": "DevKacperEssentials",
     "version": "0.0.1",
     "unity": "2021.3",
     "description": "Scripts to use in every unity project.",
