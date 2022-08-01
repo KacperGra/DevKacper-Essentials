@@ -1,11 +1,11 @@
 {
-
-    "name": "com.devkacper.unityessentials",
-    "displayName": "DevKacperEssentials",
-    "version": "0.0.1",
-    "unity": "2019.2",
-    "description": "Scripts to use in every unity project.",
-    "dependencies": {
-    }
-
+  "name": "com.devkacper.unityessentials",
+  "displayName": "DevKacperEssentials",
+  "version": "0.0.1",
+  "unity": "2019.2",
+  "description": "Scripts to use in every unity project.",
+  "keywords": [ "Essentials" ],
+  "category": "Essentials",
+  "dependencies": {
+  }
 }
