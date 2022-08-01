@@ -13,7 +13,8 @@ namespace DevKacper.Timers
 
         private void Update()
         {
-            _onUpdate?.Invoke(Time.deltaTime);
+            float deltaTime = Time.deltaTime;
+            _onUpdate?.Invoke(deltaTime);
         }
 
         public void AddTimer(TimerBehaviour timer)
