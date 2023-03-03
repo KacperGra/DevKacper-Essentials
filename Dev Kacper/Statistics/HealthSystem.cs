@@ -6,6 +6,8 @@ namespace DevKacper.Mechanic
     {
         public event Action OnDeath;
 
+        public event Action OnHealthChanged;
+
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
 
@@ -22,6 +24,8 @@ namespace DevKacper.Mechanic
             {
                 OnDeath?.Invoke();
             }
+
+            OnHealthChanged?.Invoke();
         }
 
         public void Heal(int value)
@@ -31,6 +35,8 @@ namespace DevKacper.Mechanic
             {
                 Health = MaxHealth;
             }
+
+            OnHealthChanged?.Invoke();
         }
 
         public void ChangeMaxHealth(int health, bool SetHealthEqualToMax = false)
@@ -40,6 +46,8 @@ namespace DevKacper.Mechanic
             {
                 Health = MaxHealth;
             }
+
+            OnHealthChanged?.Invoke();
         }
 
         public bool IsAlive()
