@@ -26,6 +26,21 @@ namespace DevKacper.Extensions
             }
         }
 
+        public static void DestroyChild(this Transform transform, int index)
+        {
+            int loopIndex = 0;
+            foreach (Transform child in transform)
+            {
+                if (loopIndex == index)
+                {
+                    Object.Destroy(child.gameObject);
+                    return;
+                }
+
+                ++index;
+            }
+        }
+
         public static GameObject CreateChild(this Transform transform)
         {
             var child = new GameObject();

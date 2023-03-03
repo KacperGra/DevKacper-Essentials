@@ -6,8 +6,8 @@ public class ObjectPooler<TKey, TComponent> where TComponent : Component
 {
     private class Pool
     {
-        private TComponent _prefab;
-        private Queue<TComponent> _poolQueue;
+        private readonly TComponent _prefab;
+        private readonly Queue<TComponent> _poolQueue;
 
         public int Count => _poolQueue.Count;
 
@@ -33,7 +33,7 @@ public class ObjectPooler<TKey, TComponent> where TComponent : Component
         }
     }
 
-    private Dictionary<TKey, Pool> _poolDictionary = new Dictionary<TKey, Pool>();
+    private readonly Dictionary<TKey, Pool> _poolDictionary = new Dictionary<TKey, Pool>();
 
     public void AddPool(TKey key, TComponent prefab)
     {

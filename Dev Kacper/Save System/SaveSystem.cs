@@ -6,7 +6,7 @@ namespace DevKacper.SaveSystem
 {
     public class SaveSystem
     {
-        private List<ISaveable> _saveables = new List<ISaveable>();
+        private readonly List<ISaveable> _saveables = new List<ISaveable>();
 
         public void AddSaveable(ISaveable saveable)
         {

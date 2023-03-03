@@ -7,20 +7,20 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private float _moveSpeed;
 
-    private float cameraPositionZ;
+    private float _cameraPositionZ;
 
     private void Awake()
     {
-        cameraPositionZ = transform.position.z;
+        _cameraPositionZ = transform.position.z;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (_target != null)
         {
             float moveValue = Time.fixedDeltaTime * _moveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, _target.position, moveValue);
-            transform.position = new Vector3(transform.position.x, transform.position.y, cameraPositionZ);
+            transform.position = new Vector3(transform.position.x, transform.position.y, _cameraPositionZ);
         }
     }
 

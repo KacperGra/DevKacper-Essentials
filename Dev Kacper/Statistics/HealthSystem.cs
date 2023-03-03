@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-namespace DevKacper.Mechanic
+namespace DevKacper.Gameplay
 {
     public class HealthSystem
     {
@@ -39,10 +40,10 @@ namespace DevKacper.Mechanic
             OnHealthChanged?.Invoke();
         }
 
-        public void ChangeMaxHealth(int health, bool SetHealthEqualToMax = false)
+        public void ChangeMaxHealth(int health, bool setHealthEqualToMax = false)
         {
             MaxHealth = health;
-            if (SetHealthEqualToMax)
+            if (setHealthEqualToMax)
             {
                 Health = MaxHealth;
             }
@@ -62,7 +63,7 @@ namespace DevKacper.Mechanic
 
         public override string ToString()
         {
-            return string.Format("{0}/{1}", Health.ToString(), MaxHealth.ToString());
+            return $"{Health}/{MaxHealth}";
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 namespace DevKacper.Utility
@@ -112,9 +113,7 @@ namespace DevKacper.Utility
             for (int i = 0; i < list.Count; i++)
             {
                 int rand = UnityEngine.Random.Range(0, list.Count);
-                T temp = array[rand];
-                array[rand] = array[i];
-                array[i] = temp;
+                (array[i], array[rand]) = (array[rand], array[i]);
             }
 
             return array;
@@ -122,7 +121,7 @@ namespace DevKacper.Utility
 
         public static string GetStringWithColor(string text, string hexColorValue)
         {
-            return string.Format("{0}{1}{2}{3}{4}", "<color=", hexColorValue, ">", text, "</color>");
+            return $"<color={hexColorValue}>{text}</color>";
         }
 
         public static Vector3 RandomPointInBounds(Bounds bounds)
@@ -134,19 +133,8 @@ namespace DevKacper.Utility
             );
         }
 
-        public static bool IsPointInBounds(Vector2 point, Bounds bounds)
-        {
-            bool pointXInBounds = (point.x > bounds.min.x) && (point.x < bounds.max.x);
-            bool pointYInBounds = (point.y > bounds.min.y) && (point.y < bounds.max.y);
-            if (pointXInBounds && pointYInBounds)
-            {
-                return true;
-            }
-            return false;
-        }
-
         // Create Text in the World
-        public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault)
+        public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default, int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault)
         {
             if (color == null) color = Color.white;
             return CreateWorldText(parent, text, localPosition, fontSize, (Color)color, textAnchor, textAlignment, sortingOrder);
@@ -221,12 +209,5 @@ namespace DevKacper.Utility
         {
             public T[] Items;
         }
-    }
-
-    public static class Colors
-    {
-        public static Color Blue = new Color32(46, 75, 242, 255);
-        public static Color Orange = new Color32(218, 126, 36, 255);
-        public static Color Red = new Color32(209, 43, 40, 255);
     }
 }

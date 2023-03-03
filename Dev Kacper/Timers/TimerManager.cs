@@ -7,9 +7,9 @@ namespace DevKacper.Timers
 {
     public class TimerManager : Singleton<TimerManager>
     {
-        private event Action<float> _onUpdate;
+        private Action<float> _onUpdate;
 
-        private List<TimerBehaviour> _timers = new List<TimerBehaviour>();
+        private readonly List<TimerBehaviour> _timers = new List<TimerBehaviour>();
 
         private void Update()
         {

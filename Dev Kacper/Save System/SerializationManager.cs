@@ -68,10 +68,14 @@ namespace DevKacper.SaveSystem
             SurrogateSelector selector = new SurrogateSelector();
 
             Vector3SerializationSurrogate vector3SerializationSurrogate = new Vector3SerializationSurrogate();
+            Vector2SerializationSurrogate vector2SerializationSurrogate = new Vector2SerializationSurrogate();
             QuaternionSerializationSurrogate quaternionSerializationSurrogate = new QuaternionSerializationSurrogate();
+            TransformSerializationSurrogate transformSerializationSurrogate = new TransformSerializationSurrogate();
 
             selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All), vector3SerializationSurrogate);
+            selector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), vector2SerializationSurrogate);
             selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All), quaternionSerializationSurrogate);
+            selector.AddSurrogate(typeof(Transform), new StreamingContext(StreamingContextStates.All), transformSerializationSurrogate);
 
             formatter.SurrogateSelector = selector;
 

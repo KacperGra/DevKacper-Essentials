@@ -7,7 +7,8 @@ namespace DevKacper.Timers
 {
     public class Timer
     {
-        private Action _onFinished;
+        public event Action OnFinished;
+
         private float _time;
         private float _startingTime;
 
@@ -24,7 +25,7 @@ namespace DevKacper.Timers
         {
             _startingTime = time;
             _time = time;
-            _onFinished = onFinished;
+            OnFinished = onFinished;
             _isFinished = false;
             _resetOnFinish = false;
         }
@@ -42,7 +43,7 @@ namespace DevKacper.Timers
                 return;
             }
 
-            _onFinished?.Invoke();
+            OnFinished?.Invoke();
             _isFinished = true;
             if (_resetOnFinish)
             {

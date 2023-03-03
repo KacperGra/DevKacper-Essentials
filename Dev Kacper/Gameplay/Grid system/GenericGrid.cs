@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DevKacper.Mechanic
+namespace DevKacper.Gameplay
 {
     public class GenericGrid<T>
     {

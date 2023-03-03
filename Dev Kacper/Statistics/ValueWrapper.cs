@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace DevKacper.Mechanic
+namespace DevKacper.Gameplay
 {
     public class ValueWrapper<TValue>
     {

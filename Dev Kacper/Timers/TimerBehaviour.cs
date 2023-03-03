@@ -7,13 +7,9 @@ namespace DevKacper.Timers
     {
         #region Static
 
-        public static TimerBehaviour Create(float time, Action onFinished, string name = "")
+        public static TimerBehaviour Create(float time, Action onFinished)
         {
-            TimerBehaviour timer = new TimerBehaviour(time, onFinished)
-            {
-                _name = name
-            };
-
+            TimerBehaviour timer = new TimerBehaviour(time, onFinished);
             TimerManager.Instance.AddTimer(timer);
 
             return timer;
@@ -25,10 +21,6 @@ namespace DevKacper.Timers
         }
 
         #endregion Static
-
-        public string Name => _name;
-
-        private string _name;
 
         public TimerBehaviour(float time, Action onFinished) : base(time, onFinished)
         {
